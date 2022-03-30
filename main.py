@@ -1,2 +1,3 @@
-print('Hello, World, from Russia')
-print('devel')
+d = '1'
+# input(d)
+print(d * 3)
