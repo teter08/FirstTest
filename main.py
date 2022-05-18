@@ -16,14 +16,15 @@ students = (
     Student('stud4', 23, 4, 'Yaros'),
     Student('stud5', 24, 5, 'Yaros'),
     Student('stud6', 25, 5, 'Yaros'),
-    Student('stud7', 36, 5, 'Yaros'))
+    Student('stud7', 36, 2, 'Yaros'))
 
 
 def good_students(students):
     summarks = 0
     for student in students:
         summarks += student.Marks
-    return summarks / len(students)
+    averagemarks = summarks / len(students)
+    return [student.Name for student in students if student.Marks > averagemarks]
 
 
-print(good_students(students))
+print((students))
