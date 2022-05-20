@@ -1,7 +1,5 @@
-def linear(a, b):
-    return lambda x: x * a + b
+s = 'sdfdsff34f34fjfJDSFSKD32'
 
+b = [int(i) for i in s if i.isdigit()]
 
-gp1 = linear(2, 3)
-gp2 = lambda x: x * 2 + 3
-print(gp2(2))
+print(*s.join('qqq'))
