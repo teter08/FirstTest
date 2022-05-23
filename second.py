@@ -1,5 +1,8 @@
-s = 'sdfdsff34f34fjfJDSFSKD32'
+def fac(n):
+    pr=1
+    for i in range(1,1+n):
+        pr*=i
+        yield pr
 
-b = [int(i) for i in s if i.isdigit()]
-
-print(*s.join('qqq'))
+for i in fac(6):
+    print(i)
