@@ -1,8 +1,7 @@
-def fac(n):
-    pr=1
-    for i in range(1,1+n):
-        pr*=i
-        yield pr
+sec=3
+thu=45
 
-for i in fac(6):
-    print(i)
+if __name__=='__main__':
+    print('it is main')
+
+print('Always print')
