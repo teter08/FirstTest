@@ -1,7 +1,6 @@
-sec=3
-thu=45
+a, b, c = map(int, input().split())
 
-if __name__=='__main__':
-    print('it is main')
+a = input().lower()
+b = input().lower()
 
-print('Always print')
+a = int(input())
