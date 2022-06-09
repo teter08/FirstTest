@@ -1,20 +1,7 @@
 s = input()
-stek = []
-bool = True
-if len(s) % 2 == 0:
-    for i in range(len(s)):
-        if s[i] == '(' or s[i] == '[' or s[i] == '{':
-            stek.append(s[i])
-        elif stek:
-            if (stek[-1] == '(' and s[i] == ')') or (stek[-1] == '[' and s[i] == ']') or (
-                    stek[-1] == '{' and s[i] == '}'):
-                stek = stek[:-1]
-            else:
-                bool = False
-                break
-        else:
-            bool = False
-            break
-else:
-    bool = False
-print('YES' if s and bool else 'NO')
+s = list(map(int, s))
+count = [0] * 10
+for i in s:
+    count[i] += 1
+for i, v in enumerate(count):
+    if v != 0: print(i, v)
