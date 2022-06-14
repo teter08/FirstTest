@@ -1,9 +1,38 @@
-# n, m = map(int, input().split())
-n, m = 3, 4
-a = []
-x=0
-for i in range(n):
-    if i%2!=0:
-        a.append([x for x in range(m)])
+from math import ceil
 
-print(a)
+# n = int(input())
+n = 4
+a = [[0] * n for _ in range(n)]
+x, y = 0, 0
+nom = 1
+size = n
+for qqq in range(ceil(n)):
+    for i in range(size):
+        a[x][y] = nom
+        nom += 1
+        y += 1
+    y -= 1
+    x += 1
+    size -= 1
+    for i in range(size):
+        a[x][y] = nom
+        nom += 1
+        x += 1
+    x -= 1
+    y -= 1
+    for i in range(size):
+        a[x][y] = nom
+        nom += 1
+        y -= 1
+    y += 1
+    x -= 1
+    size -= 1
+    for i in range(size):
+        a[x][y] = nom
+        nom += 1
+        x -= 1
+    x += 1
+    y += 1
+
+for line in a:
+    print('\t'.join(map(str, line)))
