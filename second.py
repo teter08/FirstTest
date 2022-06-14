@@ -9,10 +9,11 @@ for i in range(n):
 for i in range(4):
     a.append(input())
 
-a, b = map(int, input().split())
-a1, b1 = a, b
-while b > 0:
-    c = a % b
-    a = b
-    b = c
-print((a1 * b1) // a)
+for key, value in d.items():
+    print(key, value)
+
+4
+abc
+abcd
+abc
+acab
