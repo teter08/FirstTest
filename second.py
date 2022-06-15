@@ -1,6 +1,6 @@
 a, b, c = map(int, input().split())
 
-mystr = list(map(int, input().split()))
+mylist = list(map(int, input().split()))
 
 n = int(input())
 for i in range(n):
@@ -11,9 +11,11 @@ for i in range(4):
 
 for key, value in d.items():
     print(key, value)
-
-4
-abc
-abcd
-abc
-acab
+Дили: navalny
+Дили: realdonaldtrump
+Били: navalny
+Вили: realdonaldtrump
+Вили: realdonaldtrump
+Били: joebiden
+Дили: joebiden
+конец
