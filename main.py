@@ -1,18 +1,6 @@
-def factorial(n: int):
-    f = 1
-    for i in range(1, n + 1):
-        f *= i
-    return f
+def shift_letter(letter: str, shift: int) -> str:
+    '''Функция сдвигает символ letter на shift позиций'''
+    return chr((ord(letter) - 96 + shift) % 26 + 96)
 
 
-def trailing_zeros(n: int) -> int:
-    '''
-
-    :param n:
-    :return:
-    '''
-    s = str(factorial(n))
-    return len(s) - len(s.rstrip('0'))
-
-
-print(trailing_zeros.__doc__)
+print(shift_letter.__doc__)
