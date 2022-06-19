@@ -1,6 +1,4 @@
-def shift_letter(letter: str, shift: int) -> str:
-    '''Функция сдвигает символ letter на shift позиций'''
-    return chr((ord(letter) - 96 + shift) % 26 + 96)
+def count_args(*args):
+    return (len(args))
 
-
-print(shift_letter.__doc__)
+count_args(1,2,3,4,5,5)
