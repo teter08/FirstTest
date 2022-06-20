@@ -1,4 +1,5 @@
-def count_args(*args):
-    return (len(args))
+def info_kwargs(**kwargs):
+    [print(f'{k} = {v}') for k, v in sorted(kwargs.items())]
 
-count_args(1,2,3,4,5,5)
+
+info_kwargs(first_name="John", last_name="Doe", age=33)
