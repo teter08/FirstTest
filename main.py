@@ -1,5 +1,12 @@
-def info_kwargs(**kwargs):
-    [print(f'{k} = {v}') for k, v in sorted(kwargs.items())]
+def double_it(f):
+    def inner(*args, **kwargs):
+        return 2*f(*args, **kwargs)
+    return inner
 
+@double_it
+def multiply(num1, num2):
+    return num1 * num2
 
-info_kwargs(first_name="John", last_name="Doe", age=33)
+res = multiply(9, 4) # произведение 9*4=36, но декоратор double_it удваивает это значение
+print(res)
+
