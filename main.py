@@ -1,12 +1,8 @@
-def double_it(f):
-    def inner(*args, **kwargs):
-        return 2*f(*args, **kwargs)
-    return inner
+def longest_word_in_file(file_name: str) -> str:
+    with open(file_name, 'r', encoding='utf-8') as inf:
+        lines = inf.read().split()
+    col = [int(x) for x in lines if len(x)==2]
+    return sum(col)
 
-@double_it
-def multiply(num1, num2):
-    return num1 * num2
 
-res = multiply(9, 4) # произведение 9*4=36, но декоратор double_it удваивает это значение
-print(res)
-
+print(longest_word_in_file(r'C:\Новая папка\numbers.txt'))

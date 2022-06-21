@@ -12,3 +12,6 @@ for i in range(4):
 for key, value in d.items():
     print(key, value)
 pwdcw2022
+
+with open(file_name, 'r') as inf:
+    lines = inf.read().splitlines()
