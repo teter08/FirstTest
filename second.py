@@ -15,3 +15,12 @@ pwdcw2022
 
 with open(file_name, 'r') as inf:
     lines = inf.read().splitlines()
+
+3
+444444 Женя
+79129874521 Женя
+79604845827 Оля
+3
+Оля
+Олег
+Женя
