@@ -1,18 +1,23 @@
-class Cell:
-    def __init__(self, around_mines: int, mine: bool):
-        self.around_mines = around_mines
-        self.mine = mine
-        self.fl_open = False
+class Factory:
+    def build_sequence(self) -> list:
+        return []
+
+    def build_number(self, string):
+        return float(string)
 
 
-class GamePole:
-    def __init__(self, n: int, m: int):
-        self.n = n
-        self.m = m
-        self.pole = []
+class Loader:
+    def parse_format(self, string, factory):
+        seq = factory.build_sequence()
+        for sub in string.split(","):
+            item = factory.build_number(sub)
+            seq.append(item)
 
-    def init(self):
-        pass
+        return seq
 
-    def show(self):
-        pass
+
+# эти строчки не менять!
+ld = Loader()
+#s = input()
+res = ld.parse_format('4, 5, -6.5', Factory())
+print(res)
