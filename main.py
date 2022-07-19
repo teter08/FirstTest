@@ -1,23 +1,19 @@
-class Factory:
-    def build_sequence(self) -> list:
-        return []
-
-    def build_number(self, string):
-        return float(string)
+from string import ascii_lowercase, digits
 
 
-class Loader:
-    def parse_format(self, string, factory):
-        seq = factory.build_sequence()
-        for sub in string.split(","):
-            item = factory.build_number(sub)
-            seq.append(item)
+class CardCheck:
+    CHARS_FOR_NAME = ascii_lowercase.upper() + digits
 
-        return seq
+    @staticmethod
+    def check_card_number(number: str) -> bool:
+        lst=number.split('-')
+        print(lst)
 
 
-# эти строчки не менять!
-ld = Loader()
-#s = input()
-res = ld.parse_format('4, 5, -6.5', Factory())
-print(res)
+    @staticmethod
+    def check_name(name: str) -> bool:
+        pass
+
+
+print(CardCheck.check_card_number("1234-5678-9012-0000"))
+print(CardCheck.check_name("SERGEI BALAKIREV"))
