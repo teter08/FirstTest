@@ -6,13 +6,12 @@ class CardCheck:
 
     @staticmethod
     def check_card_number(number: str) -> bool:
-        lst=number.split('-')
-        print(lst)
+        return (all(map(lambda x: set(x) <= set(digits), number.split('-'))) and number[4] == number[9] == number[
+            14] == '-' and len(number) == 19)
 
-
-    @staticmethod
-    def check_name(name: str) -> bool:
-        pass
+    @classmethod
+    def check_name(cls, name: str) -> bool:
+        return (all(map(lambda x: set(x) <= set(cls.CHARS_FOR_NAME), name.split())) and len(name.split()) == 2)
 
 
 print(CardCheck.check_card_number("1234-5678-9012-0000"))
