@@ -1,18 +1,35 @@
-from string import ascii_lowercase, digits
+class Server:
+    idip = 1
+
+    def __init__(self, buffer=None):
+        self.ip = Server.idip
+        self.buffer = buffer
+        Server.idip += 1
 
 
-class CardCheck:
-    CHARS_FOR_NAME = ascii_lowercase.upper() + digits
+class Router:
+    servs = {}
 
-    @staticmethod
-    def check_card_number(number: str) -> bool:
-        return (all(map(lambda x: set(x) <= set(digits), number.split('-'))) and number[4] == number[9] == number[
-            14] == '-' and len(number) == 19)
+    def link(self, server):
+        self.servs[id(server)] = server
 
-    @classmethod
-    def check_name(cls, name: str) -> bool:
-        return (all(map(lambda x: set(x) <= set(cls.CHARS_FOR_NAME), name.split())) and len(name.split()) == 2)
+    def unlink(self, server):
+        self.servs.pop(id(server))
 
 
-print(CardCheck.check_card_number("1234-5678-9012-0000"))
-print(CardCheck.check_name("SERGEI BALAKIREV"))
+class Data:
+    def __init__(self, data: str, ip: int):
+        self.data = data
+        self.ip = ip
+
+
+s1 = Server()
+s2 = Server()
+s3 = Server()
+s4 = Server()
+r1 = Router()
+r1.link(s1)
+r1.link(s2)
+r1.link(s3)
+r1.link(s4)
+r1.unlink(s1)
