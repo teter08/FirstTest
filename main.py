@@ -5,7 +5,7 @@ class Server:
         self.ip = Server.idip
         self.buffer = []
         self.myrouter = None
-        Server.idip += 1
+        Server.idip += 10
 
     def send_data(self, data):
         if self.myrouter:
