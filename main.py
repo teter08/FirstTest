@@ -1,18 +1,14 @@
-class Constructor:
-    def add_atribute(self, attr, value):
-        setattr(self, attr, value)
+class Person:
+    def __init__(self, first_name, last_name, age):
+        self.first_name, self.last_name, self.age = first_name, last_name, age
 
-    def display(self):
-        print(self.__dict__)
+    def full_name(self) -> str:
+        return f'{self.last_name} {self.first_name}'
+
+    def is_adult(self) -> bool:
+        return self.age >= 18
 
 
-obj1 = Constructor()
-obj1.display()  # печатает {}
-obj1.add_atribute('color', 'red')
-obj1.add_atribute('width', 20)
-obj1.display()  # печатает {'color': 'red', 'width': 20}
-
-obj2 = Constructor()
-obj2.display()  # печатает {}
-obj2.add_atribute('height', 100)
-obj2.display()  # печатает {'height': 100}
+p1 = Person('Jimi', 'Hendrix', 18)
+print(p1.full_name())  # выводит "Hendrix Jimi"
+print(p1.is_adult()) # выводит "True"
