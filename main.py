@@ -1,40 +1,23 @@
-class Stack:
-    def __init__(self):
-        self.values = []
+class Worker:
+    def __init__(self, name, salary, gender, passport):
+        self.name, self.salary, self.gender, self.passport = name, salary, gender, passport
 
-    def push(self, item):
-        self.values.append(item)
-
-    def pop(self):
-        try:
-            return self.values.pop()
-        except:
-            print('Empty Stack')
-
-    def peek(self):
-        try:
-            return self.values[-1]
-        except:
-            print('Empty Stack')
-            return None
-
-    def is_empty(self):
-        return len(self.values) == 0
-
-    def size(self):
-        return len(self.values)
+    def get_info(self):
+        print(f'Worker {self.name}; passport-{self.passport}')
 
 
-s = Stack()
-s.peek()  # распечатает 'Empty Stack'
-print(s.is_empty())  # распечатает True
-s.push('cat')  # кладем элемент 'cat' на вершину стека
-s.push('dog')  # кладем элемент 'dog' на вершину стека
-print(s.peek())  # распечатает 'dog'
-s.push(True)  # кладем элемент True на вершину стека
-print(s.size())  # распечатает 3
-print(s.is_empty())  # распечатает False
-s.push(777)  # кладем элемент 777 на вершину стека
-print(s.pop())  # удаляем элемент 777 с вершины стека и печатаем его
-print(s.pop())  # удаляем элемент True с вершины стека и печатаем его
-print(s.size())  # распечатает 2
+persons = [
+    ('Allison Hill', 334053, 'M', '1635644202'),
+    ('Megan Mcclain', 191161, 'F', '2101101595'),
+    ('Brandon Hall', 731262, 'M', '6054749119'),
+    ('Michelle Miles', 539898, 'M', '1355368461'),
+    ('Donald Booth', 895667, 'M', '7736670978'),
+    ('Gina Moore', 900581, 'F', '7018476624'),
+    ('James Howard', 460663, 'F', '5461900982'),
+    ('Monica Herrera', 496922, 'M', '2955495768'),
+    ('Sandra Montgomery', 479201, 'M', '5111859731'),
+    ('Amber Perez', 403445, 'M', '0602870126')
+]
+
+worker_objects = [Worker(*a) for a in persons]
+[a.get_info() for a in worker_objects]
