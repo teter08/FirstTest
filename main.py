@@ -1,40 +1,42 @@
-class Stack:
-    def __init__(self):
-        self.values = []
+class UserMail:
+    def __init__(self, login, email):
+        self.login, self.__email = login, email
 
-    def push(self, item):
-        self.values.append(item)
+    def get_email(self):
+        return self.__email
 
-    def pop(self):
+    def set_email(self, newmail: str):
         try:
-            return self.values.pop()
+            if newmail.count('@') == 1 and newmail.index('@') < newmail.index('.'):
+                self.__email = newmail
+            else:
+                print(f'ErrorMail:{newmail}')
         except:
-            print('Empty Stack')
+            print(f'ErrorMail:{newmail}')
 
-    def peek(self):
-        try:
-            return self.values[-1]
-        except:
-            print('Empty Stack')
-            return None
-
-    def is_empty(self):
-        return len(self.values) == 0
-
-    def size(self):
-        return len(self.values)
+    email = property(fget=get_email, fset=set_email)
 
 
-s = Stack()
-s.peek()  # распечатает 'Empty Stack'
-print(s.is_empty())  # распечатает True
-s.push('cat')  # кладем элемент 'cat' на вершину стека
-s.push('dog')  # кладем элемент 'dog' на вершину стека
-print(s.peek())  # распечатает 'dog'
-s.push(True)  # кладем элемент True на вершину стека
-print(s.size())  # распечатает 3
-print(s.is_empty())  # распечатает False
-s.push(777)  # кладем элемент 777 на вершину стека
-print(s.pop())  # удаляем элемент 777 с вершины стека и печатаем его
-print(s.pop())  # удаляем элемент True с вершины стека и печатаем его
-print(s.size())  # распечатает 2
+jim = UserMail("aka47", 'hello@com.org')
+assert jim.login == "aka47"
+assert jim._UserMail__email == "hello@com.org"
+assert isinstance(jim, UserMail)
+assert isinstance(type(jim).email, property), 'Вы не создали property email'
+
+jim.email = [1, 2, 3]  # печатает ErrorMail:[1, 2, 3]
+jim.email = 'hello@@re.ee'  # печатает ErrorMail:hello@@re.ee
+jim.email = 'hello@re.w3'
+assert jim.email == 'hello@re.w3'
+
+k = UserMail('belosnezhka', 'prince@wait.you')
+assert k.email == 'prince@wait.you'
+assert k.login == 'belosnezhka'
+assert isinstance(k, UserMail)
+
+k.email = {1, 2, 3}  # печатает ErrorMail:{1, 2, 3}
+k.email = 'prince@still@.wait'  # печатает ErrorMail:prince@still@.wait
+k.email = 'prince@stillwait'  # печатает ErrorMail:prince@stillwait
+k.email = 'prince@still.wait'
+assert k.get_email() == 'prince@still.wait'
+k.email = 'pri.nce@stillwait'  # печатает ErrorMail:pri.nce@stillwait
+assert k.email == 'prince@still.wait'
