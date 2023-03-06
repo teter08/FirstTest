@@ -1,27 +1,23 @@
-class Circle:
+class Robot:
+    population = 0
+
+    def __init__(self, name):
+        self.name = name
+        print(f'Робот {self.name} был создан')
+        Robot.population += 1
+
+    def destroy(self):
+        Robot.population -= 1
+        print(f'Робот {self.name} был уничтожен')
+
+    def say_hello(self):
+        print(f'Робот {self.name} приветствует тебя, особь человеческого рода')
+
     @classmethod
-    def from_diameter(cls, d):
-        return Circle(d / 2)
+    def how_many(cls):
+        print(f'{Robot.population}, вот сколько нас еще осталось')
 
-    @staticmethod
-    def is_positive(number):
-        return number > 0
-
-    @staticmethod
-    def area(radius):
-        return 2 * 3.14 * radius * radius
-
-    def __init__(self, radius):
-        if not Circle.is_positive(radius):
-            raise ValueError("Радиус должен быть положительным")
-        self.radius = radius
-
-
-# код ниже не нужно удалять, в нем находятся проверки
-circle_1 = Circle.from_diameter(10)
-assert isinstance(circle_1, Circle)
-assert circle_1.radius == 5.0
-print(f"circle_1.radius={circle_1.radius}")
-assert Circle.is_positive(10)
-assert not Circle.is_positive(-5)
-assert Circle.area(1) == 6.28
+r2 = Robot("R2-D2") # печатает "Робот R2-D2 был создан"
+r2.say_hello() # печатает "Робот R2-D2 приветствует тебя, особь человеческого рода"
+Robot.how_many() # печатает "1, вот сколько нас еще осталось"
+r2.destroy() # печатает "Робот R2-D2 был уничтожен"
