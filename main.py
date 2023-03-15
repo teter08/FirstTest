@@ -1,55 +1,34 @@
-from functools import total_ordering
+class Quadrilateral:
+    def __init__(self, *args):
+        if len(args) == 2:
+            self.width, self.height = args[0], args[1]
+        else:
+            self.width, self.height = args[0], args[0]
 
+    def __str__(self):
+        if self.width == self.height:
+            return f'Квадрат размером {self.width}х{self.height}'
+        return f'Прямоугольник размером {self.width}х{self.height}'
 
-@total_ordering
-class Rectangle:
-    def __init__(self, width, height):
-        self.width, self.height = width, height
+    def __bool__(self):
+        return self.width == self.height
 
-    @property
-    def area(self):
-        return self.width * self.height
+q1 = Quadrilateral(10)
+print(q1)
+assert q1.height == 10
+assert q1.width == 10
+assert bool(q1) is True
+assert q1.__str__() == "Квадрат размером 10х10"
+assert isinstance(q1, Quadrilateral)
 
-    def __eq__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area == other
-        if type(other) == Rectangle:
-            return self.area == other.area
+q2 = Quadrilateral(3, 5)
+print(q2)
+assert q2.__str__() == "Прямоугольник размером 3х5"
+assert bool(q2) is not True
+assert isinstance(q2, Quadrilateral)
 
-    def __lt__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area < other
-        if type(other) == Rectangle:
-            return self.area < other.area
-
-r1 = Rectangle(3, 4)
-assert r1.width == 3
-assert r1.height == 4
-assert r1.area == 12
-assert isinstance(type(r1).area, property), 'Вы не создали property area'
-
-assert r1 > 11
-assert not r1 > 12
-assert r1 >= 12
-assert r1 <= 12
-assert not r1 > 13
-assert not r1 == 13
-assert r1 != 13
-assert r1 == 12
-
-r2 = Rectangle(2, 6)
-assert r1 == r2
-assert not r1 != r2
-assert not r1 > r2
-assert not r1 < r2
-assert r1 >= r2
-assert r1 <= r2
-
-r3 = Rectangle(5, 2)
-assert not r2 == r3
-assert r2 != r3
-assert r2 > r3
-assert not r2 < r3
-assert r2 >= r3
-assert not r2 <= r3
-print('Good')
+q3 = Quadrilateral(4, 7)
+print(q3)
+assert bool(q3) is False
+assert q3.__str__() == "Прямоугольник размером 4х7"
+assert isinstance(q3, Quadrilateral)
