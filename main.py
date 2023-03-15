@@ -1,54 +1,55 @@
-class Fruit:
-    def __init__(self, name, price):
-        self.name, self.price = name, price
+from functools import total_ordering
+
+
+@total_ordering
+class Rectangle:
+    def __init__(self, width, height):
+        self.width, self.height = width, height
+
+    @property
+    def area(self):
+        return self.width * self.height
 
     def __eq__(self, other):
         if isinstance(other, (int, float)):
-            return self.price == other
-        if type(other) == Fruit:
-            return self.price == other.price
+            return self.area == other
+        if type(other) == Rectangle:
+            return self.area == other.area
 
     def __lt__(self, other):
         if isinstance(other, (int, float)):
-            return self.price < other
-        if type(other) == Fruit:
-            return self.price < other.price
+            return self.area < other
+        if type(other) == Rectangle:
+            return self.area < other.area
 
-    def __le__(self, other):
-        return self == other or self < other
+r1 = Rectangle(3, 4)
+assert r1.width == 3
+assert r1.height == 4
+assert r1.area == 12
+assert isinstance(type(r1).area, property), 'Вы не создали property area'
 
-    def __gt__(self, other):
-        if isinstance(other, (int, float)):
-            return self.price > other
-        if type(other) == Fruit:
-            return self.price > other.price
+assert r1 > 11
+assert not r1 > 12
+assert r1 >= 12
+assert r1 <= 12
+assert not r1 > 13
+assert not r1 == 13
+assert r1 != 13
+assert r1 == 12
 
-    def __ge__(self, other):
-        return self == other or self > other
+r2 = Rectangle(2, 6)
+assert r1 == r2
+assert not r1 != r2
+assert not r1 > r2
+assert not r1 < r2
+assert r1 >= r2
+assert r1 <= r2
 
-
-apple = Fruit("Apple", 0.5)
-orange = Fruit("Orange", 1)
-banana = Fruit("Banana", 1.6)
-lime = Fruit("Lime", 1.0)
-assert (banana > 1.2) is True
-assert (banana >= 1.2) is True
-assert (banana == 1.2) is False
-assert (banana != 1.2) is True
-assert (banana < 1.2) is False
-assert (banana <= 1.2) is False
-
-assert (apple > orange) is False
-assert (apple >= orange) is False
-assert (apple == orange) is False
-assert (apple != orange) is True
-assert (apple < orange) is True
-assert (apple <= orange) is True
-
-assert (orange == lime) is True
-assert (orange != lime) is False
-assert (orange > lime) is False
-assert (orange < lime) is False
-assert (orange <= lime) is True
-assert (orange >= lime) is True
+r3 = Rectangle(5, 2)
+assert not r2 == r3
+assert r2 != r3
+assert r2 > r3
+assert not r2 < r3
+assert r2 >= r3
+assert not r2 <= r3
 print('Good')
