@@ -1,44 +1,54 @@
-class Order:
-    def __init__(self, cart: list, customer: str):
-        self.cart, self.customer = cart, customer
+class Fruit:
+    def __init__(self, name, price):
+        self.name, self.price = name, price
 
-    def __add__(self, other):
-        return Order(self.cart + [other], self.customer)
+    def __eq__(self, other):
+        if isinstance(other, (int, float)):
+            return self.price == other
+        if type(other) == Fruit:
+            return self.price == other.price
 
-    def __radd__(self, other):
-        return Order([other] + self.cart, self.customer)
+    def __lt__(self, other):
+        if isinstance(other, (int, float)):
+            return self.price < other
+        if type(other) == Fruit:
+            return self.price < other.price
 
-    def __sub__(self, other):
-        try:
-            self.cart.remove(other)
-        except:
-            pass
-        return Order(self.cart, self.customer)
+    def __le__(self, other):
+        return self == other or self < other
 
-    def __rsub__(self, other):
-        return self - other
+    def __gt__(self, other):
+        if isinstance(other, (int, float)):
+            return self.price > other
+        if type(other) == Fruit:
+            return self.price > other.price
+
+    def __ge__(self, other):
+        return self == other or self > other
 
 
-order = Order(['banana', 'apple'], 'Гена Букин')
+apple = Fruit("Apple", 0.5)
+orange = Fruit("Orange", 1)
+banana = Fruit("Banana", 1.6)
+lime = Fruit("Lime", 1.0)
+assert (banana > 1.2) is True
+assert (banana >= 1.2) is True
+assert (banana == 1.2) is False
+assert (banana != 1.2) is True
+assert (banana < 1.2) is False
+assert (banana <= 1.2) is False
 
-order_2 = order + 'orange'
-assert order.cart == ['banana', 'apple']
-assert order.customer == 'Гена Букин'
-assert order_2.cart == ['banana', 'apple', 'orange']
+assert (apple > orange) is False
+assert (apple >= orange) is False
+assert (apple == orange) is False
+assert (apple != orange) is True
+assert (apple < orange) is True
+assert (apple <= orange) is True
 
-order = 'mango' + order
-assert order.cart == ['mango', 'banana', 'apple']
-order = 'ice cream' + order
-assert order.cart == ['ice cream', 'mango', 'banana', 'apple']
-
-order = order - 'banana'
-assert order.cart == ['ice cream', 'mango', 'apple']
-
-order3 = order - 'banana'
-assert order3.cart == ['ice cream', 'mango', 'apple']
-
-order = order - 'mango'
-assert order.cart == ['ice cream', 'apple']
-order = 'lime' - order
-assert order.cart == ['ice cream', 'apple']
+assert (orange == lime) is True
+assert (orange != lime) is False
+assert (orange > lime) is False
+assert (orange < lime) is False
+assert (orange <= lime) is True
+assert (orange >= lime) is True
 print('Good')
