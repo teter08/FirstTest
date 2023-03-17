@@ -1,24 +1,55 @@
-class UnitedKingdom:
-    @staticmethod
-    def capital():
-        print('London is the capital of Great Britain.')
-
-    @staticmethod
-    def language():
-        print('English is the primary language of Great Britain.')
+from functools import total_ordering
 
 
-class Spain:
-    @staticmethod
-    def capital():
-        print('Madrid is the capital of Spain.')
+@total_ordering
+class Rectangle:
+    def __init__(self, width, height):
+        self.width, self.height = width, height
 
-    @staticmethod
-    def language():
-        print('Spanish is the primary language of Spain.')
+    @property
+    def area(self):
+        return self.width * self.height
 
-obj_uk = UnitedKingdom()
-obj_spa = Spain()
-for country in (obj_spa, obj_uk):
-    country.capital()
-    country.language()
+    def __eq__(self, other):
+        if isinstance(other, (int, float)):
+            return self.area == other
+        if type(other) == Rectangle:
+            return self.area == other.area
+
+    def __lt__(self, other):
+        if isinstance(other, (int, float)):
+            return self.area < other
+        if type(other) == Rectangle:
+            return self.area < other.area
+
+r1 = Rectangle(3, 4)
+assert r1.width == 3
+assert r1.height == 4
+assert r1.area == 12
+assert isinstance(type(r1).area, property), 'Вы не создали property area'
+
+assert r1 > 11
+assert not r1 > 12
+assert r1 >= 12
+assert r1 <= 12
+assert not r1 > 13
+assert not r1 == 13
+assert r1 != 13
+assert r1 == 12
+
+r2 = Rectangle(2, 6)
+assert r1 == r2
+assert not r1 != r2
+assert not r1 > r2
+assert not r1 < r2
+assert r1 >= r2
+assert r1 <= r2
+
+r3 = Rectangle(5, 2)
+assert not r2 == r3
+assert r2 != r3
+assert r2 > r3
+assert not r2 < r3
+assert r2 >= r3
+assert not r2 <= r3
+print('Good')
