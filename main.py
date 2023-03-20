@@ -1,55 +1,28 @@
-from functools import total_ordering
+class Card:
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
 
 
-@total_ordering
-class Rectangle:
-    def __init__(self, width, height):
-        self.width, self.height = width, height
+class Deck:
+    ranks = [str(n) for n in range(2, 11)] + list('JQKA')
+    suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+    pos = -1
 
-    @property
-    def area(self):
-        return self.width * self.height
+    def __init__(self):
+        self.cards = [Card(rank, suit) for suit in self.suits for rank in self.ranks]
 
-    def __eq__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area == other
-        if type(other) == Rectangle:
-            return self.area == other.area
+    def __iter__(self):
+        return self
 
-    def __lt__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area < other
-        if type(other) == Rectangle:
-            return self.area < other.area
+    def __next__(self):
+        if self.pos < len(self.cards)-1:
+            self.pos += 1
+            return f'{self.cards[self.pos].rank} {self.cards[self.pos].suit}'
+        else:
+            raise StopIteration
 
-r1 = Rectangle(3, 4)
-assert r1.width == 3
-assert r1.height == 4
-assert r1.area == 12
-assert isinstance(type(r1).area, property), 'Вы не создали property area'
 
-assert r1 > 11
-assert not r1 > 12
-assert r1 >= 12
-assert r1 <= 12
-assert not r1 > 13
-assert not r1 == 13
-assert r1 != 13
-assert r1 == 12
-
-r2 = Rectangle(2, 6)
-assert r1 == r2
-assert not r1 != r2
-assert not r1 > r2
-assert not r1 < r2
-assert r1 >= r2
-assert r1 <= r2
-
-r3 = Rectangle(5, 2)
-assert not r2 == r3
-assert r2 != r3
-assert r2 > r3
-assert not r2 < r3
-assert r2 >= r3
-assert not r2 <= r3
-print('Good')
+deck = Deck()
+for card in deck:
+    print(card)
