@@ -1,32 +1,39 @@
-# Напишите определение класса DictMixin
-class DictMixin:
-    def to_dict(self):
-        d = self.__dict__
-        for k, v in d.items():
-            if isinstance(v, DictMixin):
-                d[k] = v.to_dict()
+# Напишите определение класса JsonSerializableMixin
+import json
+
+
+class JsonSerializableMixin:
+    def to_json(self):
+        def rec(obj: JsonSerializableMixin):
+            recjs = obj.__dict__
+            for k1, v1 in recjs.items():
+                if isinstance(v1, JsonSerializableMixin):
+                    recjs[k1] = rec(v1)
+            return obj.__dict__
+
+        js = self.__dict__
+        for k, v in js.items():
+            if isinstance(v, JsonSerializableMixin):
+                js[k] = rec(v)
             elif isinstance(v, list):
                 for i, val in enumerate(v):
-                    if isinstance(val, DictMixin):
-                        v[i] = val.to_dict()
-        return d
+                    if isinstance(val, JsonSerializableMixin):
+                        v[i] = rec(val)
+
+        # print(json.dumps(str(js)))
+        return json.dumps(js)
 
 
-# Ниже код для проверки миксина DictMixin
+# Ниже код для проверки миксина JsonSerializableMixin
 
-class Phone(DictMixin):
-    def __init__(self, number):
-        self.number = number
-
-
-class Person(DictMixin):
+class Person(JsonSerializableMixin):
     def __init__(self, name, age, address):
         self.name = name
         self.age = age
         self.address = address
 
 
-class Address(DictMixin):
+class Address(JsonSerializableMixin):
     def __init__(self, street, city, state, zip_code):
         self.street = street
         self.city = city
@@ -34,88 +41,30 @@ class Address(DictMixin):
         self.zip_code = zip_code
 
 
-class Company(DictMixin):
+class Company(JsonSerializableMixin):
     def __init__(self, name, address):
         self.name = name
         self.address = address
 
 
-address = Address("123 Main St", "Anytown", "CA", "12345")
-john_doe = Person("John Doe", 30, address)
-
-john_doe_dict = john_doe.to_dict()
-print(john_doe_dict.items())
-assert john_doe_dict == {
-    'name': 'John Doe',
-    'age': 30,
-    'address': {
-        'street': '123 Main St',
-        'city': 'Anytown',
-        'state': 'CA',
-        'zip_code': '12345'
-    }
-}
-
 address = Address("123 Main St", "Albuquerque", "NM", "987654")
-assert address.to_dict() == {
-    'street': '123 Main St',
-    'city': 'Albuquerque',
-    'state': 'NM',
-    'zip_code': '987654'
-}
-# walter = Person("Walter White", 30, address)
-# assert walter.to_dict() == {'address': {'city': 'Albuquerque',
-#                                         'state': 'NM',
-#                                         'street': '123 Main St',
-#                                         'zip_code': '987654'},
-#                             'age': 30,
-#                             'name': 'Walter White'}
-#
-# walter_phone = Phone("555-1234")
-# walter.phone = walter_phone
-# assert walter.to_dict() == {'address': {'city': 'Albuquerque',
-#                                         'state': 'NM',
-#                                         'street': '123 Main St',
-#                                         'zip_code': '987654'},
-#                             'age': 30,
-#                             'name': 'Walter White',
-#                             'phone': {'number': '555-1234'}}
-#
-# company_address = Address("3828 Piermont Dr", "Albuquerque", "NM", "12345")
-# company = Company("SCHOOL", company_address)
-#
-# assert company.to_dict() == {'address': {'city': 'Albuquerque',
-#                                          'state': 'NM',
-#                                          'street': '3828 Piermont Dr',
-#                                          'zip_code': '12345'},
-#                              'name': 'SCHOOL'}
-#
-# jesse_address = Address("456 Oak St", "Albuquerque", "NM", "12345")
-# jesse = Person("Jesse Bruce Pinkman", 27, jesse_address)
-# jesse.phone = Phone("555-5678")
-#
-# fring = Person("Gustavo Fring", 55, Address("Los Pollos Hermanos", "Albuquerque", "NM", "12345"))
-# fring.friends = [walter, jesse]
-#
-# assert fring.to_dict() == {'address': {'city': 'Albuquerque',
-#                                        'state': 'NM',
-#                                        'street': 'Los Pollos Hermanos',
-#                                        'zip_code': '12345'},
-#                            'age': 55,
-#                            'friends': [{'address': {'city': 'Albuquerque',
-#                                                     'state': 'NM',
-#                                                     'street': '123 Main St',
-#                                                     'zip_code': '987654'},
-#                                         'age': 30,
-#                                         'name': 'Walter White',
-#                                         'phone': {'number': '555-1234'}},
-#                                        {'address': {'city': 'Albuquerque',
-#                                                     'state': 'NM',
-#                                                     'street': '456 Oak St',
-#                                                     'zip_code': '12345'},
-#                                         'age': 27,
-#                                         'name': 'Jesse Bruce Pinkman',
-#                                         'phone': {'number': '555-5678'}}],
-#                            'name': 'Gustavo Fring'}
-#
-# print('Good')
+assert address.to_json() == '{"street": "123 Main St", "city": "Albuquerque", "state": "NM", "zip_code": "987654"}'
+
+walter = Person("Walter White", 30, address)
+# print(walter.to_json())
+walter.hobby = ['Chemistry', 'Cooking']
+walter.is_danger = True
+company_address = Address("3828 Piermont Dr", "Albuquerque", "NM", "12345")
+walter.company = Company("SCHOOL", company_address)
+print(walter.to_json())
+assert walter.to_json() == '{"name": "Walter White", "age": 30, "address": {"street": "123 Main St", "city": "Albuquerque", "state": "NM", "zip_code": "987654"}, "hobby": ["Chemistry", "Cooking"], "is_danger": true, "company": {"name": "SCHOOL", "address": {"street": "3828 Piermont Dr", "city": "Albuquerque", "state": "NM", "zip_code": "12345"}}}'
+
+jesse_address = Address("456 Oak St", "Albuquerque", "NM", "12345")
+jesse = Person("Jesse Bruce Pinkman", 27, jesse_address)
+walter.is_lucky = False
+
+fring = Person("Gustavo Fring", 55, Address("Los Pollos Hermanos", "Albuquerque", "NM", "12345"))
+fring.friends = [walter, jesse]
+
+assert fring.to_json() == '{"name": "Gustavo Fring", "age": 55, "address": {"street": "Los Pollos Hermanos", "city": "Albuquerque", "state": "NM", "zip_code": "12345"}, "friends": [{"name": "Walter White", "age": 30, "address": {"street": "123 Main St", "city": "Albuquerque", "state": "NM", "zip_code": "987654"}, "hobby": ["Chemistry", "Cooking"], "is_danger": true, "company": {"name": "SCHOOL", "address": {"street": "3828 Piermont Dr", "city": "Albuquerque", "state": "NM", "zip_code": "12345"}}, "is_lucky": false}, {"name": "Jesse Bruce Pinkman", "age": 27, "address": {"street": "456 Oak St", "city": "Albuquerque", "state": "NM", "zip_code": "12345"}}]}'
+print('Good')
