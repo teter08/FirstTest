@@ -1,52 +1,27 @@
-from abc import ABC, abstractmethod
+def func():
+    print('Оно живое')
 
 
-class Database:
-    @abstractmethod
-    def connect(self):
-        pass
+class CustomButton:
+    def __init__(self, text, **kwargs):
+        self.text = text
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
-    @abstractmethod
-    def disconnect(self):
-        pass
+    def config(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
-    @abstractmethod
-    def execute(self):
-        pass
-
-
-class MySQLDatabase(Database):
-
-    def connect(self):
-        print(f'Connecting to MySQL database...')
-
-    def disconnect(self):
-        print('Disconnecting from MySQL database...')
-
-    def execute(self, query):
-        print(f"Executing query '{query}' in MySQL database...")
+    def click(self):
+        try:
+            self.command()
+        except AttributeError:
+            print('Кнопка не настроена')
+        except TypeError:
+            print('Кнопка сломалась')
 
 
-class PostgreSQLDatabase(Database):
-
-    def connect(self):
-        print(f'Connecting to PostgreSQL database...')
-
-    def disconnect(self):
-        print('Disconnecting from PostgreSQL database...')
-
-    def execute(self, query):
-        print(f"Executing query '{query}' in PostgreSQL database...")
-
-mysql_db = MySQLDatabase()
-postgresql_db = PostgreSQLDatabase()
-
-mysql_db.connect()
-mysql_db.execute(
-    "SELECT * FROM customers;")
-mysql_db.disconnect()
-
-postgresql_db.connect()
-postgresql_db.execute(
-    "SELECT * FROM customers;")
-postgresql_db.disconnect()
+btn = CustomButton(text="Hello", bd=20, bg='#ffaaaa')
+btn.click()  # Кнопка не настроена
+btn.config(command=func)
+btn.click()  # Оно живое
